@@ -22,7 +22,7 @@ python app.py
 ```
 Once the application is running, you can access it in your web browser by navigating to `http://localhost:5000`.
 
-1. Capture Images:
+1. Sign Up:
    - Click on the "Capture Images" button.
    - Allow the application to access your webcam.
    - Click the "Capture" button to capture an image.
@@ -30,7 +30,7 @@ Once the application is running, you can access it in your web browser by naviga
    - Fill the information form
    - Click the "Submit" button.
 
-3. Face Recognition:
+3. Sign In:
    - After uploading or capturing images, the system will perform face recognition.
    - Wait for the train process to complete and navigate to `signin` tab.
    - The recognized faces will be displayed with their corresponding names or labels and navigate to successful.
