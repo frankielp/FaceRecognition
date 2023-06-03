@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Attendance System - Sign In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_signin.css') }}">
+    
+  </head>
+  <body>
+    <h1>Attendance System - Sign In</h1>
+    
+    <div class="video-container">
+      <!-- <div class="ring">Loading
+        <span></span>
+      </div>       -->
+      <img id="video" src="{{ url_for('video_feed') }}">
+    </div>
+
+    <div class="buttons-container">
+      <a href="{{ url_for('signin_manual') }}" class="btn signin_manual">Sign In Manually</a>
+      <a href="{{ url_for('signup') }}" class="btn signup">Sign Up</a>
+    </div> 
+    
+    <!-- <script>
+      const video = document.getElementById('video');
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.play();
+          document.querySelector('.loading').remove();
+        })
+        .catch(err => console.error(err));
+    </script> -->
+  </body>
+</html>
