@@ -9,16 +9,14 @@ Before running this application, make sure you have the following prerequisites:
 - MTCNN and Facenet libraries installed
 - Webcam or images to upload
 
-## Installation
+## Installation & Usage
 To install and run the application, follow these steps:
 
 ```bash
 git clone https://github.com/frankielp/facerecognition_flask
 bash script.sh
 ```
-
-## Usage
-To start the Flask website, run the following command:
+To solely start the Flask website, run the following command:
 ```
 python app.py
 ```
