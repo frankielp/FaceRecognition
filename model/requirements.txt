@@ -1,0 +1,15 @@
+tensorflow
+keras
+scikit-learn
+opencv-python
+h5py
+matplotlib
+Pillow
+requests
+psutil
+imageio
+google-api-python-client
+imutils
+flask
+pymongo
+pydrive
