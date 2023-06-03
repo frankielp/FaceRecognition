@@ -343,3 +343,129 @@ def capture_image_signup():
                     image_counter += 1
 
     return jsonify({'success': True})
+@app.route('/save_data', methods=['POST'])
+def save_data():
+    data = request.json
+    name = data['name']
+    position = data['position']
+    password = data['password']
+    gender = data['gender']
+    today = datetime.today().strftime('%d/%m/%Y')
+    num_docs = collection.count_documents({})
+    new_id = f"user{num_docs + 1}"
+    train_images = os.path.join(
+        "mtcnn_facenet", "Dataset", "Facedata", "raw", new_id)
+
+    # Create the folder and print the folder ID
+    folder_name = new_id
+    file_metadata = {
+        'name': folder_name,
+        'mimeType': 'application/vnd.google-apps.folder'
+    }
+    folder = service.files().create(body=file_metadata, fields='id').execute()
+    folder_id = folder.get('id')
+    print(f'Folder created with ID: {folder_id}')
+
+    # Traverse the directory structure of the local folder and upload each file to Google Drive
+    for dirpath, dirnames, filenames in os.walk(train_images):
+        for filename in filenames:
+            file_path = os.path.join(dirpath, filename)
+            file_metadata = {
+                'name': filename,
+                'parents': [folder_id]
+            }
+            media = MediaFileUpload(file_path)
+            file = service.files().create(body=file_metadata,
+                                          media_body=media, fields='id').execute()
+            print(f'File ID: {file.get("id")}')
+
+    # Search for the folder by ID and print its name
+    folder = service.files().get(fileId=folder_id, fields='id, name').execute()
+    print(f'Folder name: {folder.get("name")}')
+
+    # Search for the folder by name and print its ID
+    query = f"'{folder_id}' in parents and mimeType contains 'image/'"
+    results = service.files().list(
+        q=query, fields="nextPageToken, files(id, name)").execute()
+    items = results.get('files', [])
+    if items:
+        first_image_id = items[0]['id']
+        print(f'Folder found with ID: {first_image_id}')
+    else:
+        print('Folder not found')
+
+    align_dataset_mtcnn.preprocess()
+    classifier.train_classify()
+    # Save the data to MongoDB
+    doc = {"_id": new_id, "name": name, "position": position,
+           "password": password, "gender": gender, "type": "user",
+           "date_in": today, "train_images": folder_id, "profile_image": first_image_id, }
+    collection.insert_one(doc)
+
+    print("re-train model\n")
+    return "Data saved to MongoDB"
+
+
+@app.route('/signin_manual')
+def signin_manual():
+    """Render the signup_image.html template"""
+    return render_template('signin_manual.html')
+
+
+@app.route('/authenticate', methods=['GET', 'POST'])
+def authenticate():
+    username = request.json['username']
+    password = request.json['password']
+    user = collection.find_one({'_id': username, 'password': password})
+    if user:
+        user_name = user.get('name')
+        today = datetime.now()
+        day = today.day
+        month = today.month
+        year = today.year
+        login_data = logindata.find_one(
+            {'userId': username, 'day': day, 'month': month, 'year': year})
+
+        if login_data:
+            time_out = datetime.now().strftime("%H:%M:%S")
+            logindata.update_one({'userId': username, 'day': day, 'month': month, 'year': year}, {
+                                 '$set': {'time_out': time_out}})
+        else:
+            time_in = datetime.now().strftime("%H:%M:%S")
+            logindata.insert_one({'userId': username, 'name': user_name, 'day': day,
+                                 'month': month, 'year': year, 'time_in': time_in, 'time_out': time_in})
+        return jsonify({'success': True, 'redirect': '/welcome', 'username': username, 'password': password})
+    else:
+        return jsonify({'success': False, 'redirect': '/signup'})
+
+
+@app.route('/welcome')
+def welcome():
+    """Render the signup_image.html template"""
+    username = request.args.get('username')
+    password = request.args.get('password')
+
+    user = collection.find_one({'_id': username, 'password': password})
+    if user:
+        user_name = user.get('name')
+        user_position = user.get('position')
+
+    today = datetime.now()
+    day = today.day
+    month = today.month
+    year = today.year
+    login_data = logindata.find_one(
+        {'userId': username, 'day': day, 'month': month, 'year': year})
+
+    if login_data is not None:
+        user_timeout = login_data.get('time_out')
+        user_timein = login_data.get('time_in')
+
+    formatted_date = today.strftime('%d/%m/%Y')
+
+    return render_template('success.html', user_name=user_name, user_position=user_position,
+                           user_timein=user_timein, user_timeout=user_timeout, date=formatted_date)
+
+
+if __name__ == '__main__':
+    app.run()
