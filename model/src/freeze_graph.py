@@ -32,7 +32,7 @@ import tensorflow as tf
 import argparse
 import os
 import sys
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 from six.moves import xrange  # @UnresolvedImport
 

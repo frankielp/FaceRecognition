@@ -32,7 +32,7 @@ import sys
 import time
 import importlib
 import argparse
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import numpy as np
 import h5py

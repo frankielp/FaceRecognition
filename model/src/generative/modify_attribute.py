@@ -32,7 +32,7 @@ import tensorflow as tf
 import sys
 import argparse
 import importlib
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import os
 import numpy as np

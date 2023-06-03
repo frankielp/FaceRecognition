@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Attendance System - Sign In Manually</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style_signin.css') }}">
+</head>
+
+<body>
+  <h1>Attendance System - Sign In Manually</h1>
+
+  <form id="signin-form" action="/authenticate" method="post">
+    <div class="input-container">
+      <input type="text" id="username" name="username" required>
+      <label for="username">Username</label>
+    </div>
+
+    <div class="input-container">
+      <input type="password" id="password" name="password" required>
+      <label for="password">Password</label>
+    </div>
+
+    <div class="buttons-container">
+      <button type="submit" class="btn signin">Sign In</button>
+      <a href="{{ url_for('signup') }}" class="btn signup">Sign Up</a>
+    </div>
+
+    <div id="error-message" class="alert alert-danger" style="display:none;"></div>
+  </form>
+
+  <script>
+    const signinForm = document.getElementById('signin-form');
+    const errorMessage = document.getElementById('error-message');
+
+    signinForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      fetch('/authenticate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            if (data.redirect) {
+              const url = new URL(data.redirect, window.location.origin);
+              url.searchParams.append('username', data.username);
+              url.searchParams.append('password', data.password);
+              window.location.href = url.href;
+            } else {
+              console.error('Redirect URL not provided');
+            }
+          } else {
+            errorMessage.textContent = data.error;
+            errorMessage.style.display = 'block';
+          }
+        })
+        .catch(error => console.error(error));
+    });
+  </script>
+</body>
+
+</html>

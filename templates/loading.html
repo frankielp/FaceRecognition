@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Loading</title>
+    <style>
+        .loading-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-container">
+        <p>Loading...</p>
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = '/signin';
+        }, 5000); // Redirect to the signup image page after 5 seconds (adjust the delay as needed)
+    </script>
+</body>
+
+</html>

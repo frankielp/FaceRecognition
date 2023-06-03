@@ -33,9 +33,9 @@ import sys
 import os
 import copy
 import argparse
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
-from mtcnn_facenet.src.align import detect_face as align.detect_face
+from model.src.align import detect_face as align.detect_face
 
 
 def main(args):

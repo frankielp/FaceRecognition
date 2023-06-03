@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import os
 import math
@@ -104,9 +104,9 @@ def split_dataset(dataset, min_nrof_images_per_class, nrof_train_images_per_clas
 
 def train_classify():
     mode = 'TRAIN'  # Set mode to 'TRAIN' or 'CLASSIFY' based on your requirements
-    data_dir = 'mtcnn_facenet/Dataset/FaceData/processed'  # Path to the data directory containing aligned LFW face patches
-    model = 'mtcnn_facenet/Models/20180402-114759.pb'  # Could be either a directory containing the meta_file and ckpt_file or a model protobuf (.pb) file
-    classifier_filename = 'mtcnn_facenet/Models/facemodel.pkl'  # Classifier model file name as a pickle (.pkl) file
+    data_dir = 'model/Dataset/FaceData/processed'  # Path to the data directory containing aligned LFW face patches
+    model = 'model/Models/20180402-114759.pb'  # Could be either a directory containing the meta_file and ckpt_file or a model protobuf (.pb) file
+    classifier_filename = 'model/Models/facemodel.pkl'  # Classifier model file name as a pickle (.pkl) file
     use_split_dataset = False  # Set to True if the dataset should be split into a training and test set
     test_data_dir = None  # Path to the test data directory (optional)
     batch_size = 1000  # Number of images to process in a batch

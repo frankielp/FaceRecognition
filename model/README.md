@@ -3,7 +3,7 @@ conda create -n grab
 conda activate grab
 ```
 ```
-pip3 install mtcnn_facenet/requirements.txt
+pip3 install model/requirements.txt
 python app.py
 ```
 

@@ -36,7 +36,7 @@ import numpy as np
 import importlib
 import itertools
 import argparse
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import lfw
 

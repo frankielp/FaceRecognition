@@ -8,14 +8,14 @@ from imutils.video import VideoStream
 
 from flask import Flask, request, render_template, Response, jsonify
 from imutils.video import VideoStream
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import imutils
 import os
 import sys
 import math
 import pickle
-from mtcnn_facenet.src.align import detect_face
+from model.src.align import detect_face
 import numpy as np
 import cv2
 import collections
@@ -36,9 +36,9 @@ from httplib2 import Http
 from google.oauth2 import service_account
 from googleapiclient.errors import HttpError
 import glob
-from mtcnn_facenet.src import facenet_config
-from mtcnn_facenet.src import align_dataset_mtcnn
-from mtcnn_facenet.src import classifier
+from model.src import facenet_config
+from model.src import align_dataset_mtcnn
+from model.src import classifier
 
 disabled = True
 
@@ -75,9 +75,9 @@ THRESHOLD = [0.6, 0.7, 0.7]
 FACTOR = 0.709
 IMAGE_SIZE = 182
 INPUT_IMAGE_SIZE = 160
-CLASSIFIER_PATH = 'mtcnn_facenet/Models/facemodel.pkl'
+CLASSIFIER_PATH = 'model/Models/facemodel.pkl'
 # VIDEO_PATH = args.path
-FACENET_MODEL_PATH = 'mtcnn_facenet/Models/20180402-114759.pb'
+FACENET_MODEL_PATH = 'model/Models/20180402-114759.pb'
 @app.route('/')
 def index():
     return render_template('signin.html')
@@ -111,7 +111,7 @@ def generate_frames():
             embedding_size = embeddings.get_shape()[1]
 
             pnet, rnet, onet = detect_face.create_mtcnn(
-                sess, "mtcnn_facenet/src/align")
+                sess, "model/src/align")
 
             people_detected = set()
             person_detected = collections.Counter()
@@ -225,7 +225,7 @@ def generate_frames_signup():
         with sess.as_default():
 
             pnet, rnet, onet = detect_face.create_mtcnn(
-                sess, "mtcnn_facenet/src/align")
+                sess, "model/src/align")
 
             people_detected = set()
             person_detected = collections.Counter()
@@ -280,9 +280,6 @@ def capture_image_signup():
 
     # Read the next video frame
     frame = video.read()
-    # if not success:
-    #     print("Video stream not available.")
-    #     return "Video stream not available."
 
     # Cai dat GPU neu co
     gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.6)
@@ -292,7 +289,7 @@ def capture_image_signup():
 
     with sess.as_default():
         pnet, rnet, onet = detect_face.create_mtcnn(
-            sess, "mtcnn_facenet/src/align")
+            sess, "model/src/align")
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         bounding_boxes, _ = detect_face.detect_face(
@@ -324,15 +321,15 @@ def capture_image_signup():
                     print(name)
 
                     # Create a folder with the name of the user in the faces directory
-                    if not os.path.exists("mtcnn_facenet/Dataset"):
-                        os.makedirs("mtcnn_facenet/Dataset")
-                        if not os.path.exists("mtcnn_facenet/Dataset/Facedata"):
-                            os.makedirs("mtcnn_facenet/Dataset/Facedata")
-                            if not os.path.exists("mtcnn_facenet/Dataset/Facedata/raw"):
+                    if not os.path.exists("model/Dataset"):
+                        os.makedirs("model/Dataset")
+                        if not os.path.exists("model/Dataset/Facedata"):
+                            os.makedirs("model/Dataset/Facedata")
+                            if not os.path.exists("model/Dataset/Facedata/raw"):
                                 os.makedirs(
-                                    "mtcnn_facenet/Dataset/Facedata/raw")
+                                    "model/Dataset/Facedata/raw")
                     user_folder = os.path.join(
-                        "mtcnn_facenet/Dataset/Facedata/raw", new_id)
+                        "model/Dataset/Facedata/raw", new_id)
                     if not os.path.exists(user_folder):
                         os.mkdir(user_folder)
                     print(user_folder)
@@ -354,7 +351,7 @@ def save_data():
     num_docs = collection.count_documents({})
     new_id = f"user{num_docs + 1}"
     train_images = os.path.join(
-        "mtcnn_facenet", "Dataset", "Facedata", "raw", new_id)
+        "model", "Dataset", "Facedata", "raw", new_id)
 
     # Create the folder and print the folder ID
     folder_name = new_id

@@ -8,14 +8,14 @@ from imutils.video import VideoStream
 
 
 import argparse
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import imutils
 import os
 import sys
 import math
 import pickle
-from mtcnn_facenet.src.align import detect_face as align.detect_face
+from model.src.align import detect_face as align.detect_face
 
 import numpy as np
 import cv2

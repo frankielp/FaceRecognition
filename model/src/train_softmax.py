@@ -35,7 +35,7 @@ import tensorflow as tf
 import numpy as np
 import importlib
 import argparse
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 import lfw
 import h5py

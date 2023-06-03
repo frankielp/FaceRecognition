@@ -34,7 +34,7 @@ import sys
 import os
 import cv2
 import argparse
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 
 

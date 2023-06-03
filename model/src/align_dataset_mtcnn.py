@@ -30,11 +30,11 @@ import sys
 import os
 import tensorflow as tf
 import numpy as np
-from mtcnn_facenet.src.align import detect_face 
+from model.src.align import detect_face 
 import random
 from time import sleep
 
-from mtcnn_facenet.src import facenet_config as facenet
+from model.src import facenet_config as facenet
 
 
 
@@ -142,8 +142,8 @@ def face_alignment(input_dir, output_dir, image_size=182, margin=44, random_orde
     print('Number of successfully aligned images: %d' % nrof_successfully_aligned)
 
 def preprocess():
-    input_dir = 'mtcnn_facenet/Dataset/FaceData/raw'
-    output_dir = 'mtcnn_facenet/Dataset/FaceData/processed'
+    input_dir = 'model/Dataset/FaceData/raw'
+    output_dir = 'model/Dataset/FaceData/processed'
     face_alignment(input_dir, output_dir, image_size=160, margin=32, random_order=True, gpu_memory_fraction=0.25, detect_multiple_faces=False)
 
 if __name__ == '__main__':
