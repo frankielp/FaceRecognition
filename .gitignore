@@ -2,3 +2,4 @@ model/Dataset/raw/*
 model/Dataset/processed/*
 model/pretrained/*
 *.DS_Store*
+model/pretrained.zip
