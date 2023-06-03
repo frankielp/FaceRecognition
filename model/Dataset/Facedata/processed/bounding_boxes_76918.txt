@@ -1,0 +1,10 @@
+model/Dataset/FaceData/processed/user1/capture_image8.png 443 211 843 698
+model/Dataset/FaceData/processed/user1/capture_image10.png 450 212 857 707
+model/Dataset/FaceData/processed/user1/capture_image5.png 449 194 853 688
+model/Dataset/FaceData/processed/user1/capture_image3.png 443 158 857 660
+model/Dataset/FaceData/processed/user1/capture_image2.png 523 256 957 720
+model/Dataset/FaceData/processed/user1/capture_image6.png 449 191 859 691
+model/Dataset/FaceData/processed/user1/capture_image1.png 516 235 946 720
+model/Dataset/FaceData/processed/user1/capture_image4.png 447 191 852 686
+model/Dataset/FaceData/processed/user1/capture_image7.png 447 200 859 694
+model/Dataset/FaceData/processed/user1/capture_image9.png 451 209 855 692

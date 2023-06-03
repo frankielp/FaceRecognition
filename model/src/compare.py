@@ -22,19 +22,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
-from scipy import misc
-import tensorflow as tf
-import numpy as np
-import sys
-import os
-import copy
 import argparse
-from model.src import facenet_config as facenet
+import copy
+import os
+import sys
 
+import numpy as np
+import tensorflow as tf
+from scipy import misc
+
+from model.src import facenet_config as facenet
 from model.src.align import detect_face as align.detect_face
 
 

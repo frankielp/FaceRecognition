@@ -1,8 +1,9 @@
-from pymongo import MongoClient
+import io
 from datetime import datetime
+
 import pymongo
 from PIL import Image
-import io
+from pymongo import MongoClient
 
 # connect to db
 uri = "mongodb+srv://npn279:grab2023@cluster0.ek6wvyn.mongodb.net/?retryWrites=true&w=majority"
@@ -14,9 +15,9 @@ db = client.Bootcamp
 # select a collection (table) USER
 collection = db.USER
 
-document = collection.find_one({'_id': 'user3'})
+document = collection.find_one({"_id": "user3"})
 
-image_binary = document['profile_image']
+image_binary = document["profile_image"]
 
 image_data = io.BytesIO(image_binary)
 image = Image.open(image_data)

@@ -1,33 +1,30 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
-from flask import Flask
-from flask import render_template , request
-from flask_cors import CORS, cross_origin
-import tensorflow as tf
 import argparse
-from model.src import facenet_config as facenet
-
-import os
-import sys
-import math
-import pickle
-from model.src.align import detect_face as align.detect_face
-
-import numpy as np
-import cv2
-import collections
-from sklearn.svm import SVC
 import base64
+import collections
+import math
+import os
+import pickle
+import sys
+
+import cv2
+import numpy as np
+import tensorflow as tf
+from flask import Flask, render_template, request
+from flask_cors import CORS, cross_origin
+from sklearn.svm import SVC
+
+from model.src import facenet_config as facenet
+from model.src.align import detect_face as align.detect_face
 
 MINSIZE = 20
 THRESHOLD = [0.6, 0.7, 0.7]
 FACTOR = 0.709
 IMAGE_SIZE = 182
 INPUT_IMAGE_SIZE = 160
-CLASSIFIER_PATH = '../Models/facemodel.pkl'
-FACENET_MODEL_PATH = '../Models/20180402-114759.pb'
+CLASSIFIER_PATH = '../pretrained/facemodel.pkl'
+FACENET_MODEL_PATH = '../pretrained/20180402-114759.pb'
 
 # Load The Custom Classifier
 with open(CLASSIFIER_PATH, 'rb') as file:

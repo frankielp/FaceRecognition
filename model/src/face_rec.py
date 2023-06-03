@@ -1,21 +1,19 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
 import argparse
-from model.src import facenet_config as facenet
-
-import os
-import sys
-import math
-import pickle
-from model.src.align import detect_face as align.detect_face
-
-import numpy as np
-import cv2
 import collections
+import math
+import os
+import pickle
+import sys
+
+import cv2
+import numpy as np
+import tensorflow as tf
 from sklearn.svm import SVC
+
+from model.src import facenet_config as facenet
+from model.src.align import detect_face as align.detect_face
 
 
 def main():
@@ -29,9 +27,9 @@ def main():
     FACTOR = 0.709
     IMAGE_SIZE = 182
     INPUT_IMAGE_SIZE = 160
-    CLASSIFIER_PATH = 'Models/facemodel.pkl'
+    CLASSIFIER_PATH = 'pretrained/facemodel.pkl'
     VIDEO_PATH = args.path
-    FACENET_MODEL_PATH = 'Models/20180402-114759.pb'
+    FACENET_MODEL_PATH = 'pretrained/20180402-114759.pb'
 
     # Load model da train de nhan dien khuon mat - thuc chat la classifier
     with open(CLASSIFIER_PATH, 'rb') as file:

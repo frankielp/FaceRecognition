@@ -13,3 +13,5 @@ imutils
 flask
 pymongo
 pydrive
+isort
+git+https://github.com/psf/black
