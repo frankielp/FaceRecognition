@@ -14,6 +14,7 @@ To install and run the application, follow these steps:
 
 ```bash
 git clone https://github.com/frankielp/facerecognition
+cd facerecognition
 bash script.sh
 ```
 To solely start the Flask website, run the following command:
